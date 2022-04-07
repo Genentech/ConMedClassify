@@ -1,0 +1,38 @@
+Package: ConMedClassify
+Title: Concomitant Medication Profile Classifications
+Version: 0.1.0
+Authors@R: c(
+    person("Jonathan", "Carroll", 
+            email = "rpkg@jcarroll.com.au", 
+            role = c("aut", "cre"), 
+            comment = c(ORCID = "0000-0002-1404-5264")),
+    person("Vincent", "Rouilly",
+           email = "rouilly.vincent@gene.com",
+           role = c("aut")),
+    person(given = "Genentech",
+           role = c("cph", "fnd"))
+    )
+Maintainer: Jonathan Carroll <rpkg@jcarroll.com.au>
+Description: Process clinical ADaM-format data and classify subjects
+    into profiles based on their concomitant medication usage within 
+    a clinical trial.
+License: file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    dplyr,
+    magrittr,
+    methods,
+    purrr,
+    rlang,
+    stringr,
+    tidyr,
+    tidyselect,
+    tibble
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 7.1.1
+Depends: 
+    R (>= 2.10)

@@ -1,0 +1,61 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# ConMedClassify
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+This package stores sufficient demonstration data to perform a classification.
+
+```{r}
+library(ConMedClassify)
+
+# load demo drug basket information
+data(drug_baskets)
+drug_baskets
+
+# load demo clinical data
+data(demo_clinical_data)
+dplyr::glimpse(demo_clinical_data)
+
+as.data.frame(unnest_domain(demo_clinical_data[, c("STUDYID", "USUBJID", "nested.CM")], nested.CM))
+
+as.data.frame(unnest_domain(demo_clinical_data[, c("STUDYID", "USUBJID", "nested.EX")], nested.EX))
+
+as.data.frame(unnest_domain(demo_clinical_data[, c("STUDYID", "USUBJID", "nested.TTE")], nested.TTE))
+```
+
+Performing the classification results in a file of profiles
+
+```{r, eval = FALSE}
+# profile subjects into conmed profiles
+extract_conmed_profiles_to_tsv(demo_clinical_data, drug_baskets = drug_baskets, drug_basket_data_objects = NULL, treatments = "trt1")
+```
+
+```{r}
+res <- readr::read_tsv("inst/outputs/ConMedProfiles_trial1_basket_demo.tsv", col_types = "c")
+dplyr::glimpse(res)
+```
+
+When many of these are constructed they can be aggregated together into a single file per drug basket
+
+```{r, eval = FALSE}
+# merge all individual TSV files across studies into a single one for a given drug basket
+aggregate_conmed_profile_tsv(input_tsv_path = "outputs/",
+                             tsv_pattern = '_basket_demo\\.tsv',
+                             basket_name = "DEMO",
+                             output_filename_prefix = "outputs/CITDataMart_ConMedProfiles_")
+```
